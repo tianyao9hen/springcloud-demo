@@ -33,7 +33,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/login")
-    public ResultContant login(String loginName, String loginPassword){
+    public ResultContant login(String loginName, String loginPassword) throws Exception {
         return userEntityService.login(loginName, loginPassword);
     }
 }

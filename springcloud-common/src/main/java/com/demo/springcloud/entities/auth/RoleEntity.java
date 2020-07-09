@@ -9,28 +9,22 @@ import javax.management.relation.Role;
 import java.util.List;
 
 /**
- * UserEntity
+ * RoleEntity
  *
  * @author pxf
  * @version v1.0
- * @Date 2020-07-08
+ * @Date 2020-07-09
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEntity extends CommonEntity<UserEntity> {
+public class RoleEntity extends CommonEntity<RoleEntity> {
 
-    private static final long serialVersionUID = 4480104195884517060L;
+    private static final long serialVersionUID = 6712139361624180636L;
 
-    private String loginName;
+    private String roleName;
 
-    private String loginPassword;
-
-    private String userName;
-
-    private List<RoleEntity> roleList;
+    private String description;
 
     private List<PermissionEntity> permissionList;
-
-    private String token;
 }

@@ -12,5 +12,5 @@ import com.demo.springcloud.entities.common.ResultContant;
  */
 public interface UserEntityService {
 
-    ResultContant login(String loginName,String loginPassword);
+    ResultContant login(String loginName,String loginPassword) throws Exception;
 }

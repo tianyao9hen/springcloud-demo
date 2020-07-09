@@ -10,4 +10,8 @@ package com.demo.springcloud.constant;
  */
 public class Constant {
 
+    public static final String PUB_KEY_PATH = "static\\ras.pub";
+
+    public static final String PRI_KEY_PATH = "static\\ras.pri";
+
 }

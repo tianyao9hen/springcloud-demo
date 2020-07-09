@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.springcloud.dao.PermissionEntityMapper">
+    <resultMap id="BaseResultMap" type="com.demo.springcloud.entities.auth.PermissionEntity">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="url" property="url"/>
+        <result column="parent" property="parent"/>
+        <result column="sort" property="sort"/>
+        <result column="description" property="description"/>
+    </resultMap>
+
+    <select id="queryPermissionByUserId" resultMap="BaseResultMap">
+        SELECT T_PERMISSION.* FROM T_SYSTEM_USER
+        LEFT JOIN T_USER_ROLE ON T_SYSTEM_USER.ID = T_USER_ROLE.USER_ID AND T_SYSTEM_USER.ID = #{userId}
+        LEFT JOIN T_ROLE ON T_ROLE.ID = T_USER_ROLE.ROLE_ID
+        LEFT JOIN T_ROLE_PERMISSION ON T_ROLE_PERMISSION.ROLE_ID = T_ROLE.ID
+        LEFT JOIN T_PERMISSION ON T_PERMISSION.ID = T_ROLE_PERMISSION.PERMISSION_ID
+    </select>
+</mapper>
