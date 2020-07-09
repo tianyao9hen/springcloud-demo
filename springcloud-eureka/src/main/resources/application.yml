@@ -1,0 +1,24 @@
+server:
+  port: 7001
+
+spring:
+  application:
+    name: springcloud-eureka
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  instance:
+    hostname: ${spring.application.name}
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.id-address}:${server.port}
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:${server.port}/eureka/
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 5000
+
+

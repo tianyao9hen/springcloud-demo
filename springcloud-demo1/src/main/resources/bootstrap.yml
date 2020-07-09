@@ -1,0 +1,33 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: springcloud-demo1
+  cloud:
+    config:
+      name: ${spring.application.name}
+      profile: dev
+      discovery:
+        enabled: true
+        service-id: SPRINGCLOUD-CONFIG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${spring.cloud.client.ip-address}:${eureka.instance.port}/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  instance:
+    port: 7001
+    instance-id: ${eureka.instance.hostname}:${server.port}
+    prefer-ip-address: true
+    hostname: ${spring.application.name}
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
