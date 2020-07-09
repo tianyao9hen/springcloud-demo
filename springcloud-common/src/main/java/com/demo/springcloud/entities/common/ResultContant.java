@@ -16,13 +16,35 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultContant implements Serializable {
+public class ResultContant<T> implements Serializable {
 
     private static final long serialVersionUID = 7040730622665766599L;
 
-    private boolean status;
+    private boolean success;
 
-    private Object result;
+    private T result;
 
+    private Object error;
 
+    public void setError(String error){
+        success = false;
+        this.error = error;
+    }
+
+    public Object getError(){
+        return error;
+    }
+
+    public T getResult(){
+        return result;
+    }
+
+    public void setResult(T result){
+        success = true;
+        this.result = result;
+    }
+
+    public Boolean isSuccess(){
+        return success;
+    }
 }
