@@ -7,6 +7,7 @@ import com.demo.springcloud.exception.ServiceReturnException;
 import com.demo.springcloud.api.RedisService;
 import com.demo.springcloud.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -43,5 +44,17 @@ public class RedisServiceImpl implements RedisService{
             throw new ServiceReturnException(FwWebError.REDIS_WRONG);
         }
         return new String(encoder.encode(idKey.getBytes()));
+    }
+
+    @Override
+    public String getTokenUser(String idToken) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String idkey = new String(decoder.decode(idToken));
+        boolean isHas = redisUtil.hasKey(Constant.LOGIN_REDIS_PRE + idkey);
+        if(!isHas){
+            throw new ServiceReturnException(FwWebError.NO_LOGIN);
+        }
+        String token = (String) redisUtil.get(Constant.LOGIN_REDIS_PRE + idkey);
+        return token;
     }
 }

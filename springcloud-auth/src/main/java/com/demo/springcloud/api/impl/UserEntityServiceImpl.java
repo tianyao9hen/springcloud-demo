@@ -74,9 +74,12 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
-    public UserEntity checkUser(String token, String checkUrl) {
-        System.out.println(token);
-        System.out.println(checkUrl);
-        return null;
+    public UserEntity checkUser(String token, String checkUrl) throws Exception {
+        if(token == null || "".equals(token) || checkUrl == null || "".equals(checkUrl)){
+            throw new ServiceReturnException(FwWebError.NO_LOGIN);
+        }
+        String tokenUser = redisService.getTokenUser(token);
+        UserEntity userEntity = JwtUtils.getObjectFromToken(tokenUser, RasUtils.getPublicKey(Constant.PUB_KEY_PATH), UserEntity.class);
+        return userEntity;
     }
 }

@@ -14,6 +14,7 @@ public enum FwWebError {
     EMPTY_LOGINNAME_OR_LOGINPASSWORD(402,"用户名和密码不能为空！"),
     WRONG_LOGNNAME_OR_LOGINPASSWORD(403,"用户名或密码输入有误！"),
     REDIS_WRONG(405,"redis保存错误！"),
+    NO_PERMISSION(406,"用户权限不足！"),
     ENCRYPTION_ERRORS(404,"加密错误，请重新登陆！");
 
 

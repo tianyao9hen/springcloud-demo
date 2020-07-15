@@ -11,6 +11,7 @@ import com.demo.springcloud.entities.auth.UserEntity;
  */
 public interface RedisService {
 
-    public String login(UserEntity userEntity,String token);
+    String login(UserEntity userEntity,String token);
 
+    String getTokenUser(String token);
 }

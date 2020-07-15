@@ -15,5 +15,5 @@ public interface UserEntityService {
 
     UserEntity login(String loginName,String loginPassword) throws Exception;
 
-    UserEntity checkUser(String token, String checkUrl);
+    UserEntity checkUser(String token, String checkUrl) throws Exception;
 }
