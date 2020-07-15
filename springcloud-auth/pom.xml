@@ -14,6 +14,11 @@
     <dependencies>
         <dependency>
             <groupId>com.demo.springcloud</groupId>
+            <artifactId>springcloud-redis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.demo.springcloud</groupId>
             <artifactId>springcloud-common</artifactId>
             <version>${project.version}</version>
         </dependency>

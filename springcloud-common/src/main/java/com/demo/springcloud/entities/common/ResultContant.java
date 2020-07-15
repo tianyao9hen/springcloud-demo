@@ -1,10 +1,14 @@
 package com.demo.springcloud.entities.common;
 
+import com.demo.springcloud.enumType.FwWebError;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.collections.map.HashedMap;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ResultContant
@@ -26,17 +30,17 @@ public class ResultContant<T> implements Serializable {
 
     private Object error;
 
-    public void setError(String error){
+    private Integer errorCode;
+
+    public void setError(Object error){
         success = false;
         this.error = error;
     }
 
-    public Object getError(){
-        return error;
-    }
-
-    public T getResult(){
-        return result;
+    public void setError(FwWebError fwWebError){
+        success = false;
+        this.error = fwWebError.msg;
+        this.errorCode = fwWebError.code;
     }
 
     public void setResult(T result){

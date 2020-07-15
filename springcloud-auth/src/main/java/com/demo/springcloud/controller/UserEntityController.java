@@ -2,13 +2,11 @@ package com.demo.springcloud.controller;
 
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.entities.common.ResultContant;
-import com.demo.springcloud.service.UserEntityService;
+import com.demo.springcloud.exception.ServiceReturnException;
+import com.demo.springcloud.api.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * UserController
@@ -33,7 +31,23 @@ public class UserEntityController {
     }
 
     @PostMapping("/login")
-    public ResultContant login(String loginName, String loginPassword) throws Exception {
-        return userEntityService.login(loginName, loginPassword);
+    public ResultContant login(String loginName, String loginPassword) {
+        ResultContant<UserEntity> resultContant = new ResultContant<>();
+        try{
+            UserEntity userEntity = userEntityService.login(loginName, loginPassword);
+
+            resultContant.setResult(userEntity);
+        }catch(ServiceReturnException e){
+            resultContant.setError(e.getMsg());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return resultContant;
+    }
+
+    @PostMapping("/checkUser")
+    public UserEntity checkUser(@RequestParam("token") String token, @RequestParam("checkUrl") String checkUrl){
+        UserEntity userEntity = userEntityService.checkUser(token, checkUrl);
+        return userEntity;
     }
 }

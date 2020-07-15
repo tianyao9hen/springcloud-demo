@@ -14,4 +14,8 @@ public class Constant {
 
     public static final String PRI_KEY_PATH = "static\\ras.pri";
 
+    public static final String LOGIN_REDIS_PRE = "JWT_USER_TOKEN:";
+
+    public static final Long LOGIN_REDIS_TIMEOUT = 7200L;
+
 }

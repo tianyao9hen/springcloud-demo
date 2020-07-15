@@ -1,10 +1,6 @@
-package com.demo.springcloud.service;
+package com.demo.springcloud.api;
 
 import com.demo.springcloud.entities.auth.PermissionEntity;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
