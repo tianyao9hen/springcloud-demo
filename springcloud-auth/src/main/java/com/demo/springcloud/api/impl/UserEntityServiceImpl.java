@@ -1,5 +1,7 @@
 package com.demo.springcloud.api.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.demo.springcloud.constant.Constant;
 import com.demo.springcloud.dao.UserEntityMapper;
 import com.demo.springcloud.entities.auth.PermissionEntity;
@@ -63,7 +65,7 @@ public class UserEntityServiceImpl implements UserEntityService {
         userEntity.setLoginPassword(null);
 
 
-        String token = JwtUtils.generateToken(userEntity, 30, RasUtils.getPrivateKey(Constant.PRI_KEY_PATH));
+        String token = JwtUtils.generateToken(userEntity, RasUtils.getPrivateKey(Constant.PRI_KEY_PATH));
         String idKey = redisService.login(userEntity, token);
         if(idKey == null || "".equals(idKey)){
             throw new ServiceReturnException(FwWebError.REDIS_WRONG);
@@ -80,6 +82,22 @@ public class UserEntityServiceImpl implements UserEntityService {
         }
         String tokenUser = redisService.getTokenUser(token);
         UserEntity userEntity = JwtUtils.getObjectFromToken(tokenUser, RasUtils.getPublicKey(Constant.PUB_KEY_PATH), UserEntity.class);
-        return userEntity;
+        if(userEntity == null) {
+            throw new ServiceReturnException(FwWebError.NO_LOGIN);
+        }
+
+        List<PermissionEntity> permissionList = userEntity.getPermissionList();
+        for (Object permissionObject : permissionList) {
+            //通过jwt转换过来的列表，每一个列表中的对象都被实际的保存成了一个linkedHashMap,所以这里将每个map再次转换成对象，就可以使用了
+            //如果直接使用会报：java.util.LinkedHashMap cannot be cast to xxx
+            PermissionEntity permissionEntity = JSON.parseObject(JSONObject.toJSONString(permissionObject, true), PermissionEntity.class);
+            if(permissionEntity.getUrl().equals(checkUrl)){
+                userEntity.setHasPermission(true);
+                //刷新redis有效时长
+                redisService.refreshUserTime(token);
+                return userEntity;
+            }
+        }
+        throw new ServiceReturnException(FwWebError.NO_PERMISSION);
     }
 }

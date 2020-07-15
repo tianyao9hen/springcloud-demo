@@ -18,4 +18,6 @@ public class Constant {
 
     public static final Long LOGIN_REDIS_TIMEOUT = 7200L;
 
+    public static final Long LOGIN_REDIS_TIMEOUT_MINUTE = 120L;
+
 }

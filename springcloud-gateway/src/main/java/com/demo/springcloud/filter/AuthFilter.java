@@ -49,7 +49,6 @@ public class AuthFilter implements GlobalFilter,Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("************************ AuthFilter: "+new Date());
         ServerHttpResponse response = exchange.getResponse();
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
@@ -70,26 +69,21 @@ public class AuthFilter implements GlobalFilter,Ordered {
         HttpHeaders headers = request.getHeaders();
         List<String> tokenList = headers.get("token");
         if(tokenList==null || tokenList.size()<=0){
-            ResultContant resultContant = new ResultContant();
-            resultContant.setError(FwWebError.NO_LOGIN);
-            String json = JSONObject.toJSONString(resultContant);
-            DataBuffer buffer = response.bufferFactory().wrap(json.getBytes());
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
-            return response.writeWith(Mono.just(buffer));
+            DataBuffer dataBuffer = setResponse(FwWebError.NO_LOGIN, response);
+            return response.writeWith(Mono.just(dataBuffer));
         }
 
         String token = tokenList.get(0);
+        //这里选择使用userEntity作为返回值，原因是因为，使用通用的ResultContant因为包含了Object类型的属性无法json序列化
+        //如果返回userEntity则认为用户已登陆并且存在该权限，如果没有返回，则用户未登陆或没有权限，直接跳转到登陆页面
         UserEntity userEntity = loginCheckApi.checkUser(token, path);
 
         if(userEntity == null){
-            ResultContant resultContant = new ResultContant();
-            resultContant.setError(FwWebError.NO_PERMISSION);
-            String json = JSONObject.toJSONString(resultContant);
-            DataBuffer buffer = response.bufferFactory().wrap(json.getBytes());
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            response.getHeaders().add("Content-Type", "text/plain;charset=UTF-8");
-            return response.writeWith(Mono.just(buffer));
+            DataBuffer dataBuffer = setResponse(FwWebError.NO_LOGIN, response);
+            return response.writeWith(Mono.just(dataBuffer));
+        }else if(!userEntity.getHasPermission()){
+            DataBuffer dataBuffer = setResponse(FwWebError.NO_PERMISSION, response);
+            return response.writeWith(Mono.just(dataBuffer));
         }
 
         String json = JSONObject.toJSONString(userEntity);
@@ -110,5 +104,13 @@ public class AuthFilter implements GlobalFilter,Ordered {
     @Override
     public int getOrder() {
         return 0;
+    }
+
+    private DataBuffer setResponse(FwWebError fwWebError,ServerHttpResponse response){
+        ResultContant resultContant = new ResultContant();
+        resultContant.setError(fwWebError);
+        String json = JSONObject.toJSONString(resultContant);
+        DataBuffer buffer = response.bufferFactory().wrap(json.getBytes());
+        return buffer;
     }
 }

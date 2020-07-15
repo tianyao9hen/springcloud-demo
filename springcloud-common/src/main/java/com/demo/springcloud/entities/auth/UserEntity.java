@@ -33,4 +33,6 @@ public class UserEntity extends CommonEntity<UserEntity> {
     private List<PermissionEntity> permissionList;
 
     private String token;
+
+    private Boolean hasPermission = false;
 }

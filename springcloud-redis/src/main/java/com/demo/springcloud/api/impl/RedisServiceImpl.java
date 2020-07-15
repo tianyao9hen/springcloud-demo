@@ -57,4 +57,12 @@ public class RedisServiceImpl implements RedisService{
         String token = (String) redisUtil.get(Constant.LOGIN_REDIS_PRE + idkey);
         return token;
     }
+
+    @Override
+    public Integer refreshUserTime(String idToken) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String idkey = new String(decoder.decode(idToken));
+        boolean expire = redisUtil.expire(Constant.LOGIN_REDIS_PRE + idkey, Constant.LOGIN_REDIS_TIMEOUT);
+        return expire?1:0;
+    }
 }

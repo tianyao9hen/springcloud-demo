@@ -57,6 +57,40 @@ public class JwtUtils {
     }
 
     /**
+     * 私钥加密token，不设置过期时间，过期由redis控制
+     *
+     * @param data          需要加密的数据（载荷内容）
+     * @param privateKey    私钥
+     * @return
+     */
+    public static String generateToken(Object data, PrivateKey privateKey) throws Exception {
+
+        //1 获得jwt构建对象
+        JwtBuilder jwtBuilder = Jwts.builder();
+        //2 设置数据
+        if (data == null) {
+            throw new RuntimeException("数据不能为空");
+        }
+        BeanInfo beanInfo = Introspector.getBeanInfo(data.getClass());
+        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+            // 获得属性名
+            String name = propertyDescriptor.getName();
+            // 获得属性值
+            Object value = propertyDescriptor.getReadMethod().invoke(data);
+            if (value != null) {
+                jwtBuilder.claim(name, value);
+            }
+        }
+        //3 设置过期时间
+        //jwtBuilder.setExpiration(DateTime.now().plusMinutes(expireMinutes).toDate());
+        //4 设置加密
+        jwtBuilder.signWith(SignatureAlgorithm.RS256, privateKey);
+        //5 构建
+        return jwtBuilder.compact();
+    }
+
+    /**
      * 通过公钥解析token
      *
      * @param token     需要解析的数据

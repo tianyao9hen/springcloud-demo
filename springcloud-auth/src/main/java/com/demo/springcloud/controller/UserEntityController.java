@@ -61,12 +61,18 @@ public class UserEntityController {
 
     @PostMapping("/checkUser")
     public UserEntity checkUser(@RequestParam("token") String token, @RequestParam("checkUrl") String checkUrl){
-        UserEntity userEntity = null;
+        UserEntity userEntity = new UserEntity();
         try{
             userEntity = userEntityService.checkUser(token, checkUrl);
         }catch(ServiceReturnException e){
-            return null;
+            e.printStackTrace();
+            if(e.getCode() == 401) return null;
+            else if(e.getCode() == 406) {
+                userEntity.setHasPermission(false);
+            }
+            else return null;
         }catch(Exception e){
+            e.printStackTrace();
             return null;
         }
         return userEntity;

@@ -14,4 +14,6 @@ public interface RedisService {
     String login(UserEntity userEntity,String token);
 
     String getTokenUser(String token);
+
+    Integer refreshUserTime(String token);
 }
