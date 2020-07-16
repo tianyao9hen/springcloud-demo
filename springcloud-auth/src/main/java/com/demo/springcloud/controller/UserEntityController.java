@@ -37,6 +37,11 @@ public class UserEntityController {
         return info + ":" + userEntity.getUserName();
     }
 
+    /**
+    *@Description 登陆
+    *@Param
+    *@Return
+    */
     @PostMapping("/login")
     public ResultContant login(String loginName, String loginPassword) {
         ResultContant resultContant = new ResultContant();
@@ -50,7 +55,12 @@ public class UserEntityController {
         }
         return resultContant;
     }
-    
+
+    /**
+    *@Description 退出
+     *@Param
+    *@Return
+    */
     @PostMapping("/logout")
     public ResultContant logout(HttpServletRequest request){
         ResultContant resultContant = new ResultContant();
@@ -67,6 +77,11 @@ public class UserEntityController {
         return resultContant;
     }
 
+    /**
+    *@Description  检查用户鉴权
+    *@Param
+    *@Return
+    */
     @PostMapping("/checkUser")
     public UserEntity checkUser(@RequestParam("token") String token, @RequestParam("checkUrl") String checkUrl){
         UserEntity userEntity = new UserEntity();

@@ -1,5 +1,5 @@
 spring:
-
+  # 数据源
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
@@ -7,12 +7,14 @@ spring:
     username: root
     password: etoak
 
+  #
   servlet:
     multipart:
       enabled: true
       max-request-size: 100MB
       max-file-size: 50MB
 
+  # redis
   redis:
     database: 0
     host: localhost
@@ -26,8 +28,11 @@ spring:
         max-wait: -1
     password:
 
+# 测试用数据
 config:
   info: auth-dev
+
+# 日志级别
 logging:
   file: target/app.log
   level:

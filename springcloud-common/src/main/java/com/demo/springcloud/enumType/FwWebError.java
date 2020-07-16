@@ -2,6 +2,7 @@ package com.demo.springcloud.enumType;
 
 /**
  * FwWebError
+ * 通用的异常枚举类
  *
  * @author pxf
  * @version v1.0

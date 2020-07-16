@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * RoleEntity
+ * 角色实体类
  *
  * @author pxf
  * @version v1.0

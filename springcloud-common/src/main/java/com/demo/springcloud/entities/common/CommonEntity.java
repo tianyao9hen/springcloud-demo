@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * CommonEntity
+ * 通用的实体类父类
  *
  * @author pxf
  * @version v1.0

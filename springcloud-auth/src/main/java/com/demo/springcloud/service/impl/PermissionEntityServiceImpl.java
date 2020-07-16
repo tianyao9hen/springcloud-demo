@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * PermissionEntityServiceImpl
+ * 权限服务
  *
  * @author pxf
  * @version v1.0
@@ -25,6 +26,11 @@ public class PermissionEntityServiceImpl implements PermissionEntityService {
     @Autowired
     private PermissionEntityMapper permissionEntityMapper;
 
+    /**
+    *@Description 通过userId查询用户的所有权限
+    *@Param
+    *@Return
+    */
     @Override
     public List<PermissionEntity> queryPermissionByUserId(String userId) {
         if("".equals(userId)) return null;

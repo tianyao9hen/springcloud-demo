@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * UserEntity
+ * 用户实体类
  *
  * @author pxf
  * @version v1.0

@@ -13,8 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Date 2020-07-09
  */
 @SpringBootApplication
-@EnableDiscoveryClient
-@EnableFeignClients
+@EnableDiscoveryClient //注册服务
+@EnableFeignClients //使用feign
 public class Gateway80 {
     public static void main(String[] args){
         SpringApplication.run(Gateway80.class,args);

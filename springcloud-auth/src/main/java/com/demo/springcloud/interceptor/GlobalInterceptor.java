@@ -14,6 +14,9 @@ import java.net.URLDecoder;
 
 /**
  * GlobalInterceptor
+ * 配置全局拦截器，拦截外界请求，检查在请求头中是否有userEntity的json信息
+ * 如果有则表示该请求为网关转发的，如果没有则为非法请求
+ * 如果存在json信息，则将json转换成userEntity并保存到request的参数中，方便获取调用
  *
  * @author pxf
  * @version v1.0
@@ -22,6 +25,11 @@ import java.net.URLDecoder;
 @Component
 public class GlobalInterceptor implements HandlerInterceptor{
 
+    /**
+    *@Description 前置拦截器，将json转换成userEntity并保存到request的参数中，方便获取调用
+    *@Param
+    *@Return 
+    */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userEntityJson = request.getHeader("userEntity");

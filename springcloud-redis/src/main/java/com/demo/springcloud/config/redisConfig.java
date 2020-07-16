@@ -1,7 +1,5 @@
 package com.demo.springcloud.config;
 
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -11,6 +9,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * redisConfig
+ * redis配置类
  *
  * @author pxf
  * @version v1.0
@@ -19,6 +18,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class redisConfig {
 
+    /**
+    *@Description
+    *@Param 设置redisTemplate
+    *@Return
+    */
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();

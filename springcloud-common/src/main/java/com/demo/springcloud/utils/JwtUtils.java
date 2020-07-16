@@ -15,6 +15,7 @@ import java.security.PublicKey;
 
 /**
  * JwtUtil
+ * 使用jwt进行加密和解密操作的工具类
  *
  * @author pxf
  * @version v1.0

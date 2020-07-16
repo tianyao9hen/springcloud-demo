@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * LoginCheckApi
+ * AUTH服务的feign接口
  *
  * @author pxf
  * @version v1.0
  * @Date 2020-07-15
  */
 @Component
-@FeignClient("SPRINGCLOUD-AUTH")
+@FeignClient("SPRINGCLOUD-AUTH") //feign调用的服务注册到注册中心的名称
 @RequestMapping("/auth")
 public interface LoginCheckApi {
 

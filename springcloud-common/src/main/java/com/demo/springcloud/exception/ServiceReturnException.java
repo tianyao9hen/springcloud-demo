@@ -4,6 +4,7 @@ import com.demo.springcloud.enumType.FwWebError;
 
 /**
  * ServiceReturnException
+ * 通用的异常实体类
  *
  * @author pxf
  * @version v1.0

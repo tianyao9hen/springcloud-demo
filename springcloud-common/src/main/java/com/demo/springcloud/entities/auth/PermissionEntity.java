@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * PermissionEntity
+ * 权限实体类
  *
  * @author pxf
  * @version v1.0

@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * IntercepterConfig
+ * 拦截器配置，主要设置白名单
  *
  * @author pxf
  * @version v1.0
@@ -32,7 +33,9 @@ public class IntercepterConfig implements WebMvcConfigurer{
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //拦截所有请求
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(globalInterceptor).addPathPatterns("/**");
+        //设置白名单
         for (String url : urlSet) {
             interceptorRegistration.excludePathPatterns(url);
         }

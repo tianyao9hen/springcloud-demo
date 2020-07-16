@@ -2,20 +2,36 @@ server:
   port: 3344
 spring:
   application:
-    name: springcloud-config
+    name: springcloud-config #注册进Eureka的服务名
   profiles:
     active: native
   cloud:
     config:
       server:
+        # 配置文件保存在本地
         native:
+          # 本地路径
           search-locations: classpath:/config/
+
+#        git:
+#          uri: https://github.com/zzyybs/springcloud-config.git # github上面的git仓库名称
+#          # 搜索目录
+#          search-paths:
+#            - springcloud-config
+      # 读取分支
+#      label: master
+
+      # 读取方式：http://localhost:3344/master/config-dev.yml  http://localhost:3344/{分支}/{application}-{profile}.yml
+      #               如果不写分支 http://localhost:3344/config-dev.yml 默认读取config配置的label分支
 
 eureka:
   client:
     service-url:
+      # eureka地址
       defaultZone: http://${spring.cloud.client.ip-address}:${eureka.instance.port}/eureka/
+    # 向注册中心注册自己
     register-with-eureka: true
+    # 检索服务
     fetch-registry: true
   instance:
     port: 7001

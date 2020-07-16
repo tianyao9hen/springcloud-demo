@@ -1,34 +1,40 @@
 server:
-  port: 80
+  port: 80  # 端口号
 
 spring:
   application:
-    name: springcloud-gateway
+    name: springcloud-gateway  # 模块名称
   cloud:
+    # 配置中心部分
     config:
-      name: ${spring.application.name}
-      profile: dev
+      name: ${spring.application.name} #  配置文件前缀
+      profile: dev  # 当前版本，同时也是配置文件后缀
       discovery:
-        enabled: true
-        service-id: SPRINGCLOUD-CONFIG
+        enabled: true # 启动发现
+        service-id: SPRINGCLOUD-CONFIG # 配置中心的服务id
+    # 网关部分
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      # 配置服务路由
       routes:
-        - id: springcloud-demo1
-          uri: lb://SPRINGCLOUD-DEMO1
+        - id: springcloud-demo1 # 路由的ID,没有固定规则但要求唯一，建议配合服务名
+          uri: lb://SPRINGCLOUD-DEMO1 # 匹配后提供服务的路由地址，设置的服务id 。lb指负载均衡，默认是轮询
           predicates:
-            - Path=/demo1/**
+            - Path=/demo1/** # Path： 路径相匹配的进行路由
         - id: springcloud-auth
           uri: lb://SPRINGCLOUD-AUTH
           predicates:
             - Path=/auth/**
+  # 引入外部yml文件
   profiles:
     include: url
+  # 重复的bean进行覆盖
   main:
     allow-bean-definition-overriding: true
 
+# 这部分是Actuator监控设置暴露端点的，以下设置为web服务相关的端点
 management:
   endpoint:
     web:

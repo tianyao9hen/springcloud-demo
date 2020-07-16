@@ -13,6 +13,7 @@ import java.util.Map;
 
 /**
  * ResultContant
+ * 通用的返回值实体类
  *
  * @author pxf
  * @version v1.0

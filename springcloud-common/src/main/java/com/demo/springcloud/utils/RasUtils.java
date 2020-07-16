@@ -9,6 +9,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 /**
  * RasUtils
+ * 公钥私钥的创建和读取工具类
  *
  * @author pxf
  * @version v1.0

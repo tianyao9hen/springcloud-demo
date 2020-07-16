@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * FeignConfig
+ * 配置openFegin
  *
  * @author pxf
  * @version v1.0
@@ -24,6 +25,11 @@ import java.util.List;
 @Configuration
 public class FeignConfig {
 
+    /**
+    *@Description
+    *@Param 我们需要通过feign进行服务间的调用过程中能够将数据以json的形式进行传递，就需要配置feignDecoder，指定请求响应的格式。
+    *@Return
+    */
     @Bean
     public Decoder feignDecoder() {
         return new ResponseEntityDecoder(new SpringDecoder(feignHttpMessageConverter()));

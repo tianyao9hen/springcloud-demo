@@ -1,24 +1,35 @@
 server:
+  # 设置端口号
   port: 7001
 
 spring:
   application:
+    #设置模块名称
     name: springcloud-eureka
   main:
+    # 用来解决bean重复的问题，后定义的bean会覆盖重复的bean
     allow-bean-definition-overriding: true
 
 eureka:
   instance:
+    # 设置服务的host名称，是服务实例的名称，在集群时，多个服务实例的hostname要相同
     hostname: ${spring.application.name}
+    # 在注册中心鼠标移上是展示ip坐标，这个设置一般在服务提供者上设置
     prefer-ip-address: true
+    # 为服务实例取名，方便区分相同的服务的多个服务实例(集群时)，每个服务实例都要不同
     instance-id: ${spring.cloud.client.id-address}:${server.port}
   client:
+    # false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务
     fetch-registry: false
+    # false表示不向注册中心注册自己
     register-with-eureka: false
     service-url:
+      # 设置于Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址
       defaultZone: http://${spring.cloud.client.ip-address}:${server.port}/eureka/
   server:
+    # 关闭自我保护机制，保证不可用的服务被及时剔除
     enable-self-preservation: false
+    # 5000毫秒没有心跳，就会剔除
     eviction-interval-timer-in-ms: 5000
 
 

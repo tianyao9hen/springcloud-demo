@@ -1,16 +1,16 @@
 config:
   info: gateway-dev
 
+
 spring:
   servlet:
+    # 设置文件接收
     multipart:
       enabled: true
       max-file-size: 100MB
       max-request-size: 100MB
-  profiles:
-    include:
-      url
 
+# 日志打印级别
 logging:
   file: target/app.log
   level:
