@@ -32,6 +32,3 @@ eureka:
     instance-id: ${eureka.instance.hostname}:${server.port}
     prefer-ip-address: true
     hostname: ${spring.application.name}
-logging:
-  level:
-    com.demo.springcloud.dao: debug

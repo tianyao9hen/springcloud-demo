@@ -10,3 +10,9 @@ spring:
   profiles:
     include:
       url
+
+logging:
+  file: target/app.log
+  level:
+    root: WARN
+    com.demo.springcloud: DEBUG

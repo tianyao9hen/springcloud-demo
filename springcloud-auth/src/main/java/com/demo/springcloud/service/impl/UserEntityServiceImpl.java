@@ -100,4 +100,9 @@ public class UserEntityServiceImpl implements UserEntityService {
         }
         throw new ServiceReturnException(FwWebError.NO_PERMISSION);
     }
+
+    @Override
+    public Boolean logout(String token) {
+        return redisService.logout(token);
+    }
 }

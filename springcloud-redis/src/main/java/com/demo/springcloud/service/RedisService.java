@@ -16,4 +16,6 @@ public interface RedisService {
     String getTokenUser(String token);
 
     Integer refreshUserTime(String token);
+
+    Boolean logout(String token);
 }

@@ -64,4 +64,12 @@ public class RedisServiceImpl implements RedisService{
         boolean expire = redisUtil.expire(Constant.LOGIN_REDIS_PRE + idkey, Constant.LOGIN_REDIS_TIMEOUT);
         return expire?1:0;
     }
+
+    @Override
+    public Boolean logout(String idToken) {
+        Base64.Decoder decoder = Base64.getDecoder();
+        String idkey = new String(decoder.decode(idToken));
+        redisUtil.del(Constant.LOGIN_REDIS_PRE + idkey);
+        return true;
+    }
 }

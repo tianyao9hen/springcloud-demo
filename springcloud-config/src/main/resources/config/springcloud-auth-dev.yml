@@ -28,3 +28,8 @@ spring:
 
 config:
   info: auth-dev
+logging:
+  file: target/app.log
+  level:
+    root: WARN
+    com.demo.springcloud: DEBUG

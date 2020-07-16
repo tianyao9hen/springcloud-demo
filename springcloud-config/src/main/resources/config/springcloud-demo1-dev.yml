@@ -8,3 +8,8 @@ spring:
 
 config:
   info: demo1-dev
+logging:
+  file: target/app.log
+  level:
+    root: WARN
+    com.demo.springcloud: DEBUG

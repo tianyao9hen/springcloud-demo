@@ -3,16 +3,16 @@ package com.demo.springcloud.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.entities.common.ResultContant;
+import com.demo.springcloud.enumType.FwWebError;
 import com.demo.springcloud.exception.ServiceReturnException;
 import com.demo.springcloud.service.UserEntityService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 /**
  * UserController
  *
@@ -22,6 +22,7 @@ import java.net.URLDecoder;
  */
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class UserEntityController {
 
     @Value("${config.info}")
@@ -45,7 +46,23 @@ public class UserEntityController {
         }catch(ServiceReturnException e){
             resultContant.setError(e);
         }catch(Exception e){
-            e.printStackTrace();
+            log.error("login 异常："+e.getMessage(),e);
+        }
+        return resultContant;
+    }
+    
+    @PostMapping("/logout")
+    public ResultContant logout(HttpServletRequest request){
+        ResultContant resultContant = new ResultContant();
+        try{
+            String token = request.getHeader("token");
+            if(token == null || "".equals(token)){
+                resultContant.setError(FwWebError.NO_LOGIN);
+            }
+            Boolean result = userEntityService.logout(token);
+            resultContant.setSuccess(true);
+        }catch(Exception e){
+            log.error("logout 异常："+e.getMessage(),e);
         }
         return resultContant;
     }
@@ -56,14 +73,13 @@ public class UserEntityController {
         try{
             userEntity = userEntityService.checkUser(token, checkUrl);
         }catch(ServiceReturnException e){
-            e.printStackTrace();
             if(e.getCode() == 401) return null;
             else if(e.getCode() == 406) {
                 userEntity.setHasPermission(false);
             }
             else return null;
         }catch(Exception e){
-            e.printStackTrace();
+            log.error("checkUser异常："+e.getMessage(),e);
             return null;
         }
         return userEntity;
