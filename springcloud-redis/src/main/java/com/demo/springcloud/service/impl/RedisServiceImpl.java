@@ -1,13 +1,12 @@
-package com.demo.springcloud.api.impl;
+package com.demo.springcloud.service.impl;
 
 import com.demo.springcloud.constant.Constant;
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.enumType.FwWebError;
 import com.demo.springcloud.exception.ServiceReturnException;
-import com.demo.springcloud.api.RedisService;
+import com.demo.springcloud.service.RedisService;
 import com.demo.springcloud.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;

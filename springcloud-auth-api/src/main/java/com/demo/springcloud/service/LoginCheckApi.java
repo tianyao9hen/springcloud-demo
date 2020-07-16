@@ -1,7 +1,6 @@
-package com.demo.springcloud.api;
+package com.demo.springcloud.service;
 
 import com.demo.springcloud.entities.auth.UserEntity;
-import com.demo.springcloud.entities.common.ResultContant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;

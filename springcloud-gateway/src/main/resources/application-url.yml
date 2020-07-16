@@ -1,0 +1,15 @@
+# 白名单
+test:
+  info: 123
+
+whitelist:
+  urlset:
+    /auth/login,
+    /auth/logout
+
+  fileset:
+    css,
+    js,
+    ico,
+    jpg,
+    png

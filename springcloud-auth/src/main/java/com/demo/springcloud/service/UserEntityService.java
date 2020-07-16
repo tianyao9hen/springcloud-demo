@@ -1,8 +1,6 @@
-package com.demo.springcloud.api;
+package com.demo.springcloud.service;
 
 import com.demo.springcloud.entities.auth.UserEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * UserService

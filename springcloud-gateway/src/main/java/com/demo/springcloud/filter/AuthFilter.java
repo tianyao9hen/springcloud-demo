@@ -1,20 +1,19 @@
 package com.demo.springcloud.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.demo.springcloud.api.LoginCheckApi;
+import com.demo.springcloud.service.LoginCheckApi;
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.entities.common.ResultContant;
 import com.demo.springcloud.enumType.FwWebError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.HttpHeaders;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -24,9 +23,6 @@ import reactor.core.publisher.Mono;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -45,7 +41,19 @@ public class AuthFilter implements GlobalFilter,Ordered {
     @Autowired
     private LoginCheckApi loginCheckApi;
 
-    private static Set<String> urlSet = new HashSet<>();
+    private static Set<String> urlSet;
+
+    @Value("${whitelist.urlset}")
+    public void setUrlSet(Set<String> urlSet){
+        this.urlSet = urlSet;
+    }
+
+    private static Set<String> fileSet;
+
+    @Value("${whitelist.fileset}")
+    public void setFileSet(Set<String> fileSet){
+        this.fileSet = fileSet;
+    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -55,13 +63,14 @@ public class AuthFilter implements GlobalFilter,Ordered {
         if(request.getMethod().equals(RequestMethod.OPTIONS.name())){
             chain.filter(exchange);
         }
-        String end  = "";
         if(path.lastIndexOf("/") >= 0){
-            urlSet.add("/login");
-            urlSet.add("/logout");
-            urlSet.add("/checkUser");
-            end  = path.substring(path.lastIndexOf("/"));
-            if(urlSet.contains(end)) {
+            if(urlSet.contains(path)){
+                return chain.filter(exchange);
+            }
+        }
+        if(path.lastIndexOf(".") > 0){
+            String end = path.substring(path.lastIndexOf(".") + 1);
+            if(fileSet.contains(end)){
                 return chain.filter(exchange);
             }
         }

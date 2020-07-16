@@ -17,8 +17,16 @@ public class Controller {
     @Value("${config.info}")
     private String info;
 
+    @Value("${test.info}")
+    private String info2;
+
     @GetMapping("/gateway/get")
     public String get(){
         return info;
+    }
+
+    @GetMapping("/gateway/get2")
+    public String get2(){
+        return info2;
     }
 }

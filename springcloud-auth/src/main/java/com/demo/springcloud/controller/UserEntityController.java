@@ -4,12 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.entities.common.ResultContant;
 import com.demo.springcloud.exception.ServiceReturnException;
-import com.demo.springcloud.api.UserEntityService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.apache.catalina.User;
+import com.demo.springcloud.service.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,13 +32,7 @@ public class UserEntityController {
 
     @PostMapping("/get")
     public String get(HttpServletRequest request) throws UnsupportedEncodingException {
-        String userEntityJson = request.getHeader("userEntity");
-        String decode = URLDecoder.decode(userEntityJson, "utf-8");
-        if(userEntityJson == null){
-            return "没有userEntity请求头";
-        }
-        UserEntity userEntity = JSONObject.parseObject(decode, UserEntity.class);
-
+        UserEntity userEntity = (UserEntity)request.getAttribute("userEntity");
         return info + ":" + userEntity.getUserName();
     }
 

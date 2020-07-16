@@ -1,4 +1,4 @@
-package com.demo.springcloud.api.impl;
+package com.demo.springcloud.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -8,9 +8,9 @@ import com.demo.springcloud.entities.auth.PermissionEntity;
 import com.demo.springcloud.entities.auth.UserEntity;
 import com.demo.springcloud.enumType.FwWebError;
 import com.demo.springcloud.exception.ServiceReturnException;
-import com.demo.springcloud.api.PermissionEntityService;
-import com.demo.springcloud.api.RedisService;
-import com.demo.springcloud.api.UserEntityService;
+import com.demo.springcloud.service.PermissionEntityService;
+import com.demo.springcloud.service.RedisService;
+import com.demo.springcloud.service.UserEntityService;
 import com.demo.springcloud.utils.JwtUtils;
 import com.demo.springcloud.utils.RasUtils;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
-package com.demo.springcloud.api.impl;
+package com.demo.springcloud.service.impl;
 
 import com.demo.springcloud.dao.PermissionEntityMapper;
 import com.demo.springcloud.entities.auth.PermissionEntity;
-import com.demo.springcloud.api.PermissionEntityService;
+import com.demo.springcloud.service.PermissionEntityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

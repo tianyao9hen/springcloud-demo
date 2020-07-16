@@ -1,4 +1,4 @@
-package com.demo.springcloud.api;
+package com.demo.springcloud.service;
 
 import com.demo.springcloud.entities.auth.PermissionEntity;
 

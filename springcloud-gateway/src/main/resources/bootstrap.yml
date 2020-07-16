@@ -24,6 +24,8 @@ spring:
           uri: lb://SPRINGCLOUD-AUTH
           predicates:
             - Path=/auth/**
+  profiles:
+    include: url
   main:
     allow-bean-definition-overriding: true
 

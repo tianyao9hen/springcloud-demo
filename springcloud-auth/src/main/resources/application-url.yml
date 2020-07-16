@@ -1,0 +1,5 @@
+whitelist:
+  urlset:
+    /auth/login,
+    /auth/logout,
+    /auth/checkUser
