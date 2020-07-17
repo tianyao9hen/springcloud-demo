@@ -15,7 +15,8 @@ export function getCookie(key){
     let cookieArr = window.document.cookie.split(';');
     for(let i = 0; i < cookieArr.length; i++) {
         let arr = cookieArr[i].split('=');
-        if(arr[0] === key) {
+        let cookieKey = arr[0].replace(/^\s*|\s*$/g,"")
+        if(cookieKey === key) {
             return arr[1];
         }
     }

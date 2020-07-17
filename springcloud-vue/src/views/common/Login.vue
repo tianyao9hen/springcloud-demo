@@ -53,27 +53,18 @@
                     if (valid) {
                         this.loginLoading = true;
                         login(this.ruleForm).then(res => {
+                            //登陆成功
                             this.loginLoading = false;
-                            let result = res.data;
-                            if(result.success){
-                                //登陆成功
-                                this.$refs.ruleForm.resetFields();
-                                //result.result
-                                setCookie('loginName',this.ruleForm.loginName,172800);
-                                setCookie('loginPassword',this.ruleForm.loginPassword,172800);
-                                sessionStorage.setItem('authorization',result.result.token);
-                            }else{
-                                //登陆失败
-                                this.$message({
-                                    showClose: true,
-                                    message: result.error,
-                                    type: 'error',
-                                    center: true
-                                });
-                                removeCookie('loginName');
-                                removeCookie('loginPassword');
-                                sessionStorage.removeItem('authorization');
-                            }
+                            this.$router.replace("/")
+                        }).catch(error => {
+                            this.loginLoading = false;
+                            //登陆失败
+                            this.$message({
+                                showClose: true,
+                                message: error,
+                                type: 'error',
+                                center: true
+                            });
                         })
                     } else {
                         //验证失败
