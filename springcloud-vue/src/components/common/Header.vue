@@ -7,7 +7,7 @@
         <div class="logo">SpringCloud demo</div>
         <div class="header-right">
             <div class="header-user-con">
-                <!--欢迎访问齐鲁交通智能物业管理系统，{{username}}！-->
+                <!--欢迎访问管理系统，{{username}}！-->
                 <!-- 全屏显示 -->
                 <!--<div class="btn-fullscreen" @click="handleFullScreen">
                   <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import {logout} from 'network/auth'
+
     export default {
         name: 'Header',
         data(){
@@ -74,7 +76,17 @@
         },
         methods: {
             handleCommand(command){
-                this.$message('click on item ' + command);
+                if(command == 'logout'){
+                    this.$confirm('是否退出登陆?', '退出', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        logout().then(res => {
+                            this.$router.replace("/login")
+                        })
+                    })
+                }
             }
         }
     }
@@ -149,10 +161,10 @@
     }
     .user-avator img {
         display: block;
-        width: 40px;
-        height: 40px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
-        border: solid 1px #c1c1c1;
+        border: solid 2px #c1c1c1;
     }
     .el-dropdown-link {
         color: #fff;

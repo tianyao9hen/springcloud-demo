@@ -1,13 +1,16 @@
 <template>
     <div class="wrapper">
-        <div v-if="isLogin">
+        <template v-if="isLogin">
             <v-header/>
-        </div>
+            <v-sidebar/>
+        </template>
     </div>
 </template>
 
 <script>
     import vHeader from './Header'
+    import vSidebar from './Sidebar'
+
     import {getCookie,setCookie,removeCookie} from 'common/cookieUtils'
     import {login} from 'network/auth'
 
@@ -20,7 +23,8 @@
             }
         },
         components: {
-            vHeader
+            vHeader,
+            vSidebar
         },
         created(){
             //判断是否登陆

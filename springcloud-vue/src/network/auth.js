@@ -32,3 +32,19 @@ export function login(param){
         })
     })
 }
+
+//退出
+export function logout(){
+    return new Promise((resolve,reject) => {
+        request({
+            url: preUrl + '/logout',
+            method: 'post',
+        }).then(res => {
+            removeCookie('loginName');
+            removeCookie('loginPassword');
+            sessionStorage.removeItem('authorization');
+            sessionStorage.removeItem('userEntity');
+            resolve();
+        })
+    })
+}
